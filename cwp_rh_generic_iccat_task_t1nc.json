@@ -104,7 +104,7 @@
 	{
       "name": "fishing_zone",
       "urn": "urn:fdi:term:fishing_zone",
-      "aliases": ["GearCd"],
+      "aliases": ["FishZoneCd"],
       "dimension": true,
       "required": true,
       "rules": [
