@@ -190,6 +190,28 @@
           }
         }
       ]
+    },
+    {
+      "name": "conversion_factor",
+      "urn": "urn:fdi:term:conversion_factor",
+      "required": true,
+      "rules": [
+	    {
+		  "vrule": "if",
+		  "args": {
+			"if_condition": "!is.na(value)",
+			"then_apply": [
+				{
+				  "vrule": "threshold",
+				  "args": {
+					"operator": ">",
+					"threshold": 0
+				  }
+				}
+			]
+		  }
+		}
+      ]
     }
  ]
 }
