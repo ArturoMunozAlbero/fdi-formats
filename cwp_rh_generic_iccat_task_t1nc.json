@@ -194,7 +194,8 @@
     {
       "name": "conversion_factor",
       "urn": "urn:fdi:term:conversion_factor",
-      "required": true,
+      "required": false,
+      "dimension": true,
       "rules": [
 	    {
 		  "vrule": "if",
@@ -204,8 +205,8 @@
 				{
 				  "vrule": "threshold",
 				  "args": {
-					"operator": ">",
-					"threshold": 0
+					"operator": ">=",
+					"threshold": 1
 				  }
 				}
 			]
