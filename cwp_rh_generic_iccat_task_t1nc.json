@@ -198,19 +198,11 @@
       "dimension": true,
       "rules": [
 	    {
-		  "vrule": "if",
-		  "args": {
-			"if_condition": "!is.na(value)",
-			"then_apply": [
-				{
 				  "vrule": "threshold",
 				  "args": {
 					"operator": ">=",
 					"threshold": 1
 				  }
-				}
-			]
-		  }
 		}
       ]
     }
