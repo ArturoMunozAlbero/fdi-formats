@@ -194,7 +194,7 @@
     {
       "name": "conversion_factor",
       "urn": "urn:fdi:term:conversion_factor",
-      "required": false,
+      "required": true,
       "dimension": true,
       "rules": [
 	    {
