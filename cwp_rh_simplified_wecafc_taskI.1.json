@@ -85,7 +85,7 @@
           }
         }
       ]
-    }
+    },
 	{
       "name": "fleet_engagement_number",
       "urn": "urn:fdi:term:fleet_engagement_number",
@@ -162,7 +162,7 @@
 		}
       ]
     },
-		{
+	{
       "name": "fleet_engagement_engine_power",
       "urn": "urn:fdi:term:fleet_engagement_engine_power",
 	  "aliases":["Total engine power (Kw)"],
