@@ -1,0 +1,178 @@
+name: cwp_rh_simplified_recofi_catch
+urn: urn:fdi:format:simplified:recofi:catch
+title: CWP TG-RH simplified RECOFI catch data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag state
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_flagstate.csv
+      allow_labels: yes
+- name: fishing_area
+  urn: urn:fdi:term:fishing_area
+  aliases:
+  - Fishing area
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_fishing_area.csv
+      allow_labels: yes
+- name: landing_site
+  urn: urn:fdi:term:landing_site
+  aliases:
+  - Landing site
+  required: no
+  rules: []
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - Year
+  required: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: month
+  urn: urn:fdi:term:month
+  aliases:
+  - Month
+  required: no
+  rules: []
+- name: vessel_type
+  urn: urn:fdi:term:vessel_type
+  aliases:
+  - Vessel type
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_vessel_type.csv
+      allow_labels: yes
+- name: vessel_length_class
+  urn: urn:fdi:term:vessel_length_class
+  aliases:
+  - Vessel length class
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_vessel_length_class.csv
+          allow_labels: yes
+- name: gear_type
+  urn: urn:fdi:term:gear_type
+  aliases:
+  - Gear type
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_gear_type.csv
+      allow_labels: yes
+- name: species
+  urn: urn:fdi:term:species
+  aliases:
+  - Species
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_species.csv
+      allow_labels: yes
+- name: catch_retained
+  urn: urn:fdi:term:catch_retained
+  aliases:
+  - Retained catch (tonnes)
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: catch_retained_unit
+  urn: urn:fdi:term:catch_retained_unit
+  aliases:
+  - Retained catch unit
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$catch_retained)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - t
+- name: catch_discarded
+  urn: urn:fdi:term:catch_discarded
+  aliases:
+  - Discards (total in tonnes)
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: catch_discarded_unit
+  urn: urn:fdi:term:catch_discarded_unit
+  aliases:
+  - Discards unit
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$catch_discarded)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - t
+- name: bycatch_total
+  urn: urn:fdi:term:bycatch_total
+  aliases:
+  - Total bycatch (tonnes)
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: bycatch_total_unit
+  urn: urn:fdi:term:bycatch_total_unit
+  aliases:
+  - Total bycatch unit
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$bycatch_total)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - t
+- name: note
+  urn: urn:fdi:term:note
+  aliases:
+  - Note
+  required: no
+  rules: []

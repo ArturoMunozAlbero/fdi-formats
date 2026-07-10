@@ -1,0 +1,74 @@
+name: cwp_rh_generic_unfao_task_ns1
+urn: urn:fdi:format:generic:unfao:ns1
+title: CWP TG-RH generic FAO STATLAN NS1 data exchange format
+type: series
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases: []
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/refs/heads/main/global/cwp/cl_country_and_territory_iso3.csv
+- name: year
+  urn: urn:fdi:term:year
+  aliases: []
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: species
+  urn: urn:fdi:term:species
+  aliases: []
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/refs/heads/main/global/cwp/cl_asfis_species.csv
+- name: measurement
+  urn: urn:fdi:term:measurement
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - catch
+- name: measurement_type
+  urn: urn:fdi:term:measurement_type
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - NL
+- name: measurement_value
+  urn: urn:fdi:term:measurement_value
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: measurement_unit
+  urn: urn:fdi:term:measurement_unit
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$measurement_value)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - t

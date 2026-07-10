@@ -1,0 +1,183 @@
+name: cwp_rh_simplified_recofi_effort
+urn: urn:fdi:format:simplified:recofi:effort
+title: CWP TG-RH simplified RECOFI effort data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag state
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_flagstate.csv
+      allow_labels: yes
+- name: fishing_area
+  urn: urn:fdi:term:fishing_area
+  aliases:
+  - Fishing area
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_fishing_area.csv
+      allow_labels: yes
+- name: landing_site
+  urn: urn:fdi:term:landing_site
+  aliases:
+  - Landing site
+  required: no
+  rules: []
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - Year
+  required: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: month
+  urn: urn:fdi:term:month
+  aliases:
+  - Month
+  required: no
+  rules: []
+- name: vessel_type
+  urn: urn:fdi:term:vessel_type
+  aliases:
+  - Vessel type
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_vessel_type.csv
+      allow_labels: yes
+- name: vessel_length_class
+  urn: urn:fdi:term:vessel_length_class
+  aliases:
+  - Vessel length class
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_vessel_length_class.csv
+          allow_labels: yes
+- name: vessel_material
+  urn: urn:fdi:term:vessel_material
+  aliases:
+  - Vessel material
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_vessel_material.csv
+          allow_labels: yes
+- name: fleet_engagement_number
+  urn: urn:fdi:term:fleet_engagement_number
+  aliases:
+  - Active fleet
+  - Number of active vessel engaged in the fishery
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: gear_type
+  urn: urn:fdi:term:gear_type
+  aliases:
+  - Gear type
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_gear_type.csv
+      allow_labels: yes
+- name: species
+  urn: urn:fdi:term:species
+  aliases:
+  - Target species
+  required: yes
+  rules: []
+- name: effort_nominal
+  urn: urn:fdi:term:effort_nominal
+  aliases:
+  - Number of days absent from base
+  - Number of days at see
+  required: no
+  rules:
+  - vrule: threshold
+    args:
+      operator: '>='
+      threshold: 0
+- name: effort_nominal_unit
+  urn: urn:fdi:term:effort_nominal_unit
+  aliases:
+  - Nominal effort unit
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/recofi/cl_effortunit_recofi.csv
+      allow_labels: yes
+- name: effort_fishing_operation_number
+  urn: urn:fdi:term:effort_fishing_operation_number
+  aliases:
+  - Number of fishing operations
+  - Number of shrimp trawling operations
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: effort_fishing_duration
+  urn: urn:fdi:term:effort_fishing_duration
+  aliases:
+  - Average tow duration
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: effort_fishing_duration_unit
+  urn: urn:fdi:term:effort_fishing_duration_unit
+  aliases:
+  - Fishing duration unit
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$effort_fishing_duration)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - t
+- name: note
+  urn: urn:fdi:term:note
+  aliases:
+  - Note
+  required: no
+  rules: []

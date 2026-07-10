@@ -1,0 +1,141 @@
+name: cwp_rh_simplified_wecafc_taskI.1_format
+urn: urn:fdi:format:simplified:wecafc:taskI.1
+title: CWP TG-RH simplified WECAFC-FIRMS task III.1 data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag State
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_flagstate.csv
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - Year
+  required: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: period
+  urn: urn:fdi:term:period
+  aliases:
+  - Quarter
+  required: no
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_period.csv
+- name: fleet_segment
+  urn: urn:fdi:term:fleet_segment
+  aliases:
+  - Fleet segment
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fleet_segment.csv
+- name: catch_nominal
+  urn: urn:fdi:term:catch_nominal
+  aliases:
+  - Total nominal catch (tonnes)
+  required: yes
+  rules:
+  - vrule: threshold
+    args:
+      operator: '>'
+      threshold: 0
+- name: catch_nominal_unit
+  urn: urn:fdi:term:catch_nominal_unit
+  aliases:
+  - Nominal catch unit
+  required: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - t
+- name: fleet_engagement_number
+  urn: urn:fdi:term:fleet_engagement_number
+  aliases:
+  - Active fishing vessel count
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: fleet_engagement_number_unit
+  urn: urn:fdi:term:fleet_engagement_number_unit
+  aliases:
+  - Number unit
+  required: no
+  rules: []
+- name: fleet_engagement_capacity
+  urn: urn:fdi:term:fleet_engagement_capacity
+  aliases:
+  - Total capacity (GT)
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: fleet_engagement_capacity_unit
+  urn: urn:fdi:term:fleet_engagement_capacity_unit
+  aliases:
+  - Capacity unit
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$fleet_engagement_capacity)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - GT
+- name: fleet_engagement_engine_power
+  urn: urn:fdi:term:fleet_engagement_engine_power
+  aliases:
+  - Total engine power (Kw)
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: fleet_engagement_engine_power_unit
+  urn: urn:fdi:term:fleet_engagement_engine_power_unit
+  aliases:
+  - Engine power unit
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$fleet_engagement_engine_power)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - kW
+- name: fleet_engagement_obs
+  urn: urn:fdi:term:fleet_engagement_obs
+  aliases:
+  - Comment
+  required: no
+  rules: []

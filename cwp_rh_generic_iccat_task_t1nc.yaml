@@ -1,0 +1,150 @@
+name: cwp_rh_generic_iccat_task_t1nc
+urn: urn:fdi:format:generic:iccat:t1nc
+title: CWP TG-RH generic ICCAT T1NC data exchange format
+type: series
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - FlagVesCd
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/iccat/cl_flagstate.csv
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - YearC
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: species
+  urn: urn:fdi:term:species
+  aliases:
+  - SpeciesCd
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/iccat/cl_species.csv
+- name: stock
+  urn: urn:fdi:term:stock
+  aliases:
+  - SpcStockCd
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: mapping
+    type: warning
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-mappings/refs/heads/main/regional-to-regional/iccat/codelist_mapping_iccat_species_iccat_stocks.csv
+      ref_source_term: stock
+      ref_target_term: species
+      data_target_term: species
+- name: sampling_area
+  urn: urn:fdi:term:sampling_area
+  aliases:
+  - SaAreaCd
+  required: yes
+  dimension: yes
+  rules: []
+- name: gear_type
+  urn: urn:fdi:term:gear_type
+  aliases:
+  - GearCd
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/iccat/cl_gear_type.csv
+- name: fishing_zone
+  urn: urn:fdi:term:fishing_zone
+  aliases:
+  - FishZoneCd
+  dimension: yes
+  required: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - EEZ
+      - HSEA
+      - COMB
+- name: measurement
+  urn: urn:fdi:term:measurement
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - catch
+- name: measurement_type
+  urn: urn:fdi:term:measurement_type
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - NL
+      - DD
+      - DL
+      - FA
+- name: measurement_value
+  urn: urn:fdi:term:measurement_value
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: measurement_unit
+  urn: urn:fdi:term:measurement_unit
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$measurement_value)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - kg
+- name: measurement_source
+  urn: urn:fdi:term:measurement_source
+  aliases:
+  - DSourceLCd
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - L.PO
+      - L.CA
+      - L.PS
+      - L.FM
+      - L.SA
+      - C.LB
+      - OTH
+- name: conversion_factor
+  urn: urn:fdi:term:conversion_factor
+  required: yes
+  dimension: yes
+  rules:
+  - vrule: threshold
+    args:
+      operator: '>='
+      threshold: 1

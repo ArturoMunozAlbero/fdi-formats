@@ -1,0 +1,152 @@
+name: cwp_rh_simplified_wecafc_taskII.2_format
+urn: urn:fdi:format:simplified:wecafc:taskII.2
+title: CWP TG-RH simplified WECAFC-FIRMS task II.2 data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag state
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_flagstate.csv
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - Year
+  required: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: period
+  urn: urn:fdi:term:period
+  aliases:
+  - Quarter
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_period.csv
+- name: fleet_segment
+  urn: urn:fdi:term:fleet_segment
+  aliases:
+  - Fleet Segment
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fleet_segment.csv
+- name: gear_type
+  urn: urn:fdi:term:gear_type
+  aliases:
+  - Gear type
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_gear_type.csv
+- name: fishing_mode
+  urn: urn:fdi:term:fishing_mode
+  aliases:
+  - Fishing mode
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fishing_mode.csv
+- name: fishing_area
+  urn: urn:fdi:term:fishing_area
+  aliases:
+  - Fishing area
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fishing_area.csv
+- name: species
+  urn: urn:fdi:term:species
+  aliases:
+  - Species
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_species.csv
+- name: effort_fishing_duration
+  urn: urn:fdi:term:effort_fishing_duration
+  aliases:
+  - Days Fishing
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: effort_fishing_duration_unit
+  urn: urn:fdi:term:effort_fishing_duration_unit
+  aliases:
+  - Duration Unit
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$effort_fishing_duration)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - days
+- name: effort_nominal
+  urn: urn:fdi:term:effort_nominal
+  aliases:
+  - Nominal Effort
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: effort_nominal_unit
+  urn: urn:fdi:term:effort_nominal_unit
+  aliases:
+  - Nominal Effort Unit
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$effort_nominal)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_effort_unit.csv
+- name: effort_obs
+  urn: urn:fdi:term:effort_obs
+  aliases:
+  - Effort obs
+  required: no
+  rules: []

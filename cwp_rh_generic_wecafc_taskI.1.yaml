@@ -1,0 +1,104 @@
+name: cwp_rh_generic_wecafc_taskI.1_format
+urn: urn:fdi:format:generic:wecafc:taskI.1
+title: CWP TG-RH generic WECAFC-FIRMS task I.1 data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag state
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_flagstate.csv
+- name: time
+  urn: urn:fdi:term:time
+  aliases:
+  - Time
+  required: no
+  rules: []
+- name: time_start
+  urn: urn:fdi:term:time_start
+  aliases:
+  - Time Start
+  required: yes
+  rules:
+  - vrule: cross_column
+    args:
+      operator: <
+      expr: row$time_end
+- name: time_end
+  urn: urn:fdi:term:time_end
+  aliases:
+  - Time End
+  required: yes
+  rules:
+  - vrule: cross_column
+    args:
+      operator: '>'
+      expr: row$time_start
+- name: fleet_segment
+  urn: urn:fdi:term:fleet_segment
+  aliases:
+  - Fleet Segment
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fleet_segment.csv
+- name: measurement
+  urn: urn:fdi:term:measurement
+  aliases:
+  - Measurement
+  required: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - catch
+      - fleet_engagement
+- name: measurement_type
+  urn: urn:fdi:term:measurement_type
+  aliases:
+  - Measurement Type
+  - Type
+  required: yes
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - nominal
+      - number
+      - capacity
+      - engine_power
+- name: measurement_value
+  urn: urn:fdi:term:measurement_value
+  aliases:
+  - Measurement Value
+  - Value
+  required: yes
+  rules:
+  - vrule: threshold
+    args:
+      operator: '>'
+      threshold: 0
+- name: measurement_unit
+  urn: urn:fdi:term:measurement_unit
+  aliases:
+  - Measurement Unit
+  - Unit
+  required: no
+  rules:
+  - vrule: raw_codelist
+    args:
+      ref_values:
+      - t
+      - GT
+      - kW
+- name: measurement_obs
+  urn: urn:fdi:term:measurement_obs
+  aliases:
+  - Measurement Obs
+  - Obs
+  required: no
+  rules: []

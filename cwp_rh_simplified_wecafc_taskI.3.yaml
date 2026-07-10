@@ -1,0 +1,77 @@
+name: cwp_rh_simplified_wecafc_taskI.3_format
+urn: urn:fdi:format:simplified:wecafc:taskI.3
+title: CWP TG-RH simplified WECAFC-FIRMS task I.3 (candidate task for Discarded catches)
+  data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag state
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_flagstate.csv
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - Year
+  required: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: period
+  urn: urn:fdi:term:period
+  aliases:
+  - Quarter
+  required: no
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_period.csv
+- name: fishing_area
+  urn: urn:fdi:term:fishing_area
+  aliases:
+  - Fishing area
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fishing_area.csv
+- name: species
+  urn: urn:fdi:term:species
+  aliases:
+  - Species
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_species.csv
+- name: catch_discarded
+  urn: urn:fdi:term:catch_discarded
+  aliases:
+  - Discards (total in tonnes)
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>='
+          threshold: 0
+- name: catch_discarded_unit
+  urn: urn:fdi:term:catch_discarded_unit
+  aliases:
+  - Discards unit
+  required: no
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$catch_discarded)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - t

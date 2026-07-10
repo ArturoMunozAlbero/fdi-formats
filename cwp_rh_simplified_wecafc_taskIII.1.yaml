@@ -1,0 +1,156 @@
+name: cwp_rh_simplified_wecafc_taskIII.1_format
+urn: urn:fdi:format:simplified:wecafc:taskIII.1
+title: CWP TG-RH simplified WECAFC-FIRMS task III.1 data exchange format
+column_specs:
+- name: flagstate
+  urn: urn:fdi:term:flagstate
+  aliases:
+  - Flag state
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_flagstate.csv
+- name: year
+  urn: urn:fdi:term:year
+  aliases:
+  - Year
+  required: yes
+  rules:
+  - vrule: year
+    args: {}
+- name: fleet_segment
+  urn: urn:fdi:term:fleet_segment
+  aliases:
+  - Fleet Segment
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fleet_segment.csv
+- name: gear_type
+  urn: urn:fdi:term:gear_type
+  aliases:
+  - Gear type
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_gear_type.csv
+- name: fishing_area
+  urn: urn:fdi:term:fishing_area
+  aliases:
+  - Fishing area
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_fishing_area.csv
+- name: species
+  urn: urn:fdi:term:species
+  aliases:
+  - Species
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: codelist
+        args:
+          ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_species.csv
+- name: engagement_type
+  urn: urn:fdi:term:engagement_type
+  aliases:
+  - Engagement type
+  required: yes
+  rules:
+  - vrule: codelist
+    args:
+      ref_data_url: https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/wecafc/cl_engagement_type.csv
+- name: fleet_engagement_number
+  urn: urn:fdi:term:fleet_engagement_number
+  aliases:
+  - Number of active vessels
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: fleet_engagement_number_unit
+  urn: urn:fdi:term:fleet_engagement_number_unit
+  aliases:
+  - Number unit
+  required: yes
+  rules: []
+- name: fleet_engagement_capacity
+  urn: urn:fdi:term:fleet_engagement_capacity
+  aliases:
+  - Total capacity (GT)
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: fleet_engagement_capacity_unit
+  urn: urn:fdi:term:fleet_engagement_capacity_unit
+  aliases:
+  - Capacity unit
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$fleet_engagement_capacity)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - GT
+- name: fleet_engagement_engine_power
+  urn: urn:fdi:term:fleet_engagement_engine_power
+  aliases:
+  - Total engine power (Kw)
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(value)'
+      then_apply:
+      - vrule: threshold
+        args:
+          operator: '>'
+          threshold: 0
+- name: fleet_engagement_engine_power_unit
+  urn: urn:fdi:term:fleet_engagement_engine_power_unit
+  aliases:
+  - Engine power unit
+  required: yes
+  rules:
+  - vrule: if
+    args:
+      if_condition: '!is.na(row$fleet_engagement_engine_power)'
+      then_apply:
+      - vrule: raw_codelist
+        args:
+          ref_values:
+          - kW
+- name: fleet_engagement_obs
+  urn: urn:fdi:term:fleet_engagement_obs
+  aliases:
+  - Fleet engagement obs
+  required: no
+  rules: []
