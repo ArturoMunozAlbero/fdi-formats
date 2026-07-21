@@ -1,0 +1,66 @@
+{
+  "name": "cwp_rh_generic_iccat_task_t2ce",
+  "urn": "urn:fdi:format:generic:iccat:t2ce",
+  "title": "CWP TG-RH generic ICCAT T2CE data exchange format",
+  "type": "series",
+  "column_specs": [
+	{
+      "name": "flagstate",
+      "urn": "urn:fdi:term:flagstate",
+      "aliases": ["FlagVesCd"],
+      "required": true,
+      "dimension": true,
+      "rules": [
+		{
+          "vrule": "codelist",
+          "args": {
+            "ref_data_url": "https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/iccat/cl_flagstate.csv"
+          }
+        }
+	  ]
+    },
+	{
+      "name": "year",
+      "urn": "urn:fdi:term:year",
+      "aliases": ["YearC"],
+      "required": true,
+      "dimension": true,
+      "rules": [
+		{
+		  "vrule": "year",
+		  "args": {}
+		}
+	  ]
+    },
+	{
+      "name": "gear_type",
+      "urn": "urn:fdi:term:gear_type",
+      "aliases": ["GearCd"],
+      "required": true,
+      "dimension": true,
+      "rules": [
+		{
+          "vrule": "codelist",
+          "args": {
+            "ref_data_url": "https://raw.githubusercontent.com/fdiwg/fdi-codelists/main/regional/iccat/cl_gear_type.csv"
+          }
+        }
+	  ]
+	},
+	{
+      "name": "measurement_source",
+      "urn": "urn:fdi:term:measurement_source",
+	   "aliases": ["DSourceLCd"],
+      "required": true,
+      "dimension": true,
+      "rules": [
+        {
+          "vrule": "raw_codelist",
+          "args": {
+            "ref_values": ["L.PO", "L.CA", "L.PS", "L.FM", "L.SA", "C.LB", "OTH"]
+          }
+        }
+      ]
+  }
+ ]
+}
